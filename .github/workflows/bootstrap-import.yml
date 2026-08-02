@@ -7,12 +7,19 @@ on:
     paths:
       - '.bootstrap/**'
       - '.github/workflows/bootstrap-import.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.bootstrap/**'
+      - '.github/workflows/bootstrap-import.yml'
 
 permissions:
   contents: write
 
 jobs:
   import:
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
