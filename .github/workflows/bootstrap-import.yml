@@ -33,6 +33,7 @@ jobs:
         shell: bash
         run: |
           set -euxo pipefail
+          cp .github/workflows/bootstrap-import.yml /tmp/bootstrap-import.yml
           cat \
             .bootstrap/project.tar.xz.b64.part00 \
             .bootstrap/fixed01/chunk-* \
@@ -45,7 +46,8 @@ jobs:
           xz --test /tmp/project.tar.xz
           tar -xJf /tmp/project.tar.xz -C .
           rm -rf .bootstrap
-          rm -f .github/workflows/bootstrap-import.yml
+          rm -f .github/workflows/ci.yml
+          cp /tmp/bootstrap-import.yml .github/workflows/bootstrap-import.yml
 
       - name: Commit imported project
         shell: bash
